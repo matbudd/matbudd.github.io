@@ -1,0 +1,80 @@
+---
+# External tag (new tab): link_newtab = <a xlink:href="https://example.com" target="_blank">
+# Internal tag (nav): link_nav <a xlink:href="#publications" onclick="top.svgNav('#publications')">
+# Links are enforced to be fill:#0000ff
+
+links:
+ - text: ["Goal-Oriented Long-Lived", "Systems (GOALS)"]
+   link_newtab: "https://ori.ox.ac.uk/labs/goals/"
+
+ - text: "real-world"
+   link_newtab: "https://www.oxfordsparks.ox.ac.uk/podcasts/how-do-you-create-autonomous-robots-that-can-investigate-under-the-sea/"
+
+ - text: "deployment"
+   link_newtab: "https://orcahub.org/engagement/partnership-fund/hudson#:~:text=University%20of%20Oxford%20Team"
+
+ - text: "view my CV"
+   link_nav: "#cv"
+
+ - text: "interesting links"
+   link_nav: "#links"
+
+ - text: "contact me"
+   link_nav: "#contact"
+
+ - text: ["Team", "ORIon"]
+   link_newtab: "https://www.ori.ox.ac.uk/student-teams/team-orion/"
+
+ - text: "View online"
+   link_newtab: "/static/doc/CV Matthew Budd.pdf"
+
+ - text: "Oxford Robotics Institute coverage"
+   link_newtab: "https://ori.ox.ac.uk/student-teams/team-orion/news-team-orion/robocup-bangkok-2022/"
+
+ - text: "Thesis"
+   link_newtab: "/static/doc/M_Budd_Thesis.pdf"
+
+ - text: "Oxford Robotics Institute news item"
+   link_newtab: "https://ori.ox.ac.uk/student-teams/team-orion/news-team-orion/robocup-sydney-2019/"
+
+ - text: "Pembroke College news item"
+   link_newtab: "https://www.pmb.ox.ac.uk/news/pembroke-students-team-orion-participate-robocup-2019"
+
+ - text: "Final presentation"
+   link_newtab: "https://indico.cern.ch/event/805488/contributions/3385536/attachments/1833098/3002559/Project_Summary_TT0_Group1.pdf"
+
+ - text: "Final technical report"
+   link_newtab: "/static/doc/3YP-3-Report-GROUP1-CERN.pdf"
+
+ - text: "Engineering department news item"
+   link_newtab: "https://eng.ox.ac.uk/news/engineering-undergraduate-innovation-fund-helps-team-design-build-and-test-mars-rover-robot/"
+
+ - text: "Critical Design Review document"
+   link_newtab: "/static/doc/OxfordTeamCDRDocument.pdf"
+
+ - text: "Competition site"
+   link_newtab: "https://ukseds.org/aurora/?p=ort2018"
+
+ - text: "News item"
+   link_newtab: "https://www.cambridgeconsultants.com/insights/robots-from-golden-fairy-to-iron-serf"
+
+ - text: ["IET Diamond Jubilee engineering", "scholarship"]
+   link_newtab: ""
+
+ - text: "Mars rover"
+   link_newtab: "https://eng.ox.ac.uk/news/engineering-undergraduate-innovation-fund-helps-team-design-build-and-test-mars-rover-robot/"
+
+ - text: "high-altitude balloon scientific payload"
+   link_newtab: "/static/doc/Flight%20Data%20Overview.pdf"
+
+ - text: "Technology Scholar programme"
+   link_newtab: "https://careers.cambridgeconsultants.com/find-a-job/1684/technology-scholarship-scheme"
+
+ - text: "Sydney"
+   link_newtab: "https://ori.ox.ac.uk/student-teams/team-orion/news-team-orion/robocup-sydney-2019/"
+
+ - text: "Thailand"
+   link_newtab: "https://ori.ox.ac.uk/student-teams/team-orion/news-team-orion/robocup-bangkok-2022/"
+
+ # - text: ""
+ #   link_newtab: ""

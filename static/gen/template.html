@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html style="margin: 0; padding: 0;">
+
+  <head>
+    <title>Matthew Budd</title>
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href='/static/css/styles.css'>
+    <link rel="stylesheet" href='/static/css/bootstrap.css'>
+    <link rel='stylesheet' href=' http://fonts.googleapis.com/css?family=Roboto' type='text/css'>
+    <link rel='stylesheet' href=' http://fonts.googleapis.com/css?family=Trebuchet MS' type='text/css'>
+    <script src='/static/scripts/svg-pan-zoom.min.js'></script>
+    <script src='/static/scripts/hammer.min.js'></script>
+    <script src='/static/scripts/jquery-1.11.1.min.js'></script>
+    <script src='/static/scripts/bootstrap.min.js'></script>
+
+    <script>
+        var panZoomInstance;
+
+        window.onload = function() {
+
+            var eventsHandler;
+
+            eventsHandler = {
+              haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
+            , init: function(options) {
+                var instance = options.instance
+                  , initialScale = 1
+                  , pannedX = 0
+                  , pannedY = 0
+
+                // Init Hammer
+                // Listen only for pointer and touch events
+                this.hammer = Hammer(options.svgElement, {
+                  inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+                })
+
+                // Enable pinch
+                this.hammer.get('pinch').set({enable: true})
+
+                // Handle double tap
+                this.hammer.on('doubletap', function(ev){
+                  instance.zoomIn()
+                })
+
+                // Handle pan
+                this.hammer.on('panstart panmove', function(ev){
+                  // On pan start reset panned variables
+                  if (ev.type === 'panstart') {
+                    pannedX = 0
+                    pannedY = 0
+                  }
+
+                  // Pan only the difference
+                  instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
+                  pannedX = ev.deltaX
+                  pannedY = ev.deltaY
+                })
+
+                // Handle pinch
+                this.hammer.on('pinchstart pinchmove', function(ev){
+                  // On pinch start remember initial zoom
+                  if (ev.type === 'pinchstart') {
+                    initialScale = instance.getZoom()
+                    instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+                  }
+
+                  instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+                })
+
+                // Prevent moving the page on some devices when panning over SVG
+                options.svgElement.addEventListener('touchmove', function(e){ e.preventDefault(); });
+              }
+
+            , destroy: function(){
+                this.hammer.destroy()
+              }
+            }
+
+            panZoomInstance = svgPanZoom('#background-svg', {
+                panEnabled: true,
+                controlIconsEnabled: false,
+                zoomEnabled: true,
+                dblClickZoomEnabled: true,
+                mouseWheelZoomEnabled: true,
+                preventMouseEventsDefault: true,
+                zoomScaleSensitivity: 0.2,
+                minZoom: 0.5,
+                maxZoom: 100,
+                fit: true,
+                contain: false,
+                center: true,
+                refreshRate: 'auto',
+                customEventsHandler: eventsHandler,
+            });
+
+            (document.URL.split('#').length > 1) ? svgNav("#" + document.URL.split('#')[1]) : svgNav('#home');
+        }
+
+        function svgPanTo(targetX, targetY, targetZoom) {
+
+            var windowWidth = window.innerWidth;
+
+            if (window.innerWidth < 600) {
+                targetZoom = targetZoom * 0.5;
+            }
+
+            panZoomInstance.zoom(targetZoom);
+            var currentZoom = panZoomInstance.getZoom();
+
+            targetX = targetX - (0.5 * windowWidth)*(1/currentZoom);
+
+            panZoomInstance.pan({x: -targetX*currentZoom, y: -targetY*currentZoom});
+        }
+
+        function svgAnimatedPanTo(targetX, targetY, targetZoom) {
+
+            var animationStepTime = 1,
+                animationSteps = 50,
+                animationStep = 0,
+                defaultMoveZoom = 2.0,
+                zoomUpSteps = 25,
+                zoomDownStart = 25,
+                zoomDownSteps = 25,
+                intervalID = null,
+                windowWidth = window.innerWidth;
+
+            var startZoom = panZoomInstance.getZoom();
+
+            var startX = (-panZoomInstance.getPan().x)/startZoom + 0.5*windowWidth*(1/startZoom);
+            var startY = -panZoomInstance.getPan().y/startZoom;
+
+            moveZoom = Math.min(defaultMoveZoom, targetZoom, startZoom)
+            var logMoveZoom = Math.log(moveZoom)
+            var logStartZoom = Math.log(startZoom)
+            var logTargetZoom = Math.log(targetZoom)
+
+            var logStepZoomUp = (logMoveZoom - logStartZoom) / zoomUpSteps;
+            var logStepZoomDown = (logTargetZoom - logMoveZoom) / zoomDownSteps;
+            var stepX    = (targetX - startX) / animationSteps;
+            var stepY    = (targetY - startY) / animationSteps;
+
+            intervalID = setInterval(function(){
+                if (animationStep++ >= animationSteps) {
+                    // Cancel interval
+                    clearInterval(intervalID);
+                    svgPanTo(targetX, targetY, targetZoom);
+                } else if (animationStep < zoomUpSteps) {
+                    // Zoom up
+                    svgPanTo((startX+animationStep*stepX), (startY+animationStep*stepY), Math.exp(logStartZoom+animationStep*logStepZoomUp));
+                } else if (animationStep > zoomDownStart) {
+                    // Zoom down
+                    svgPanTo((startX+animationStep*stepX), (startY+animationStep*stepY), Math.exp(logMoveZoom+(animationStep-zoomDownStart)*logStepZoomDown));
+                } else {
+                    svgPanTo((startX+animationStep*stepX), (startY+animationStep*stepY), moveZoom);
+                }
+            }, animationStepTime);
+        }
+
+        function svgNav(tgt) {
+
+            switch(tgt) {
+                case '#home':
+                    svgAnimatedPanTo(1470, 300, 1.0);
+                    break;
+                case '#about':
+                    svgAnimatedPanTo(425, 350, 5);
+                    break;
+                case '#publications':
+                    svgAnimatedPanTo(2360, 120, 7);
+                    break;
+                case '#contact':
+                    svgAnimatedPanTo(2730, 310, 8);
+                    break;
+                case '#cv':
+                    svgAnimatedPanTo(690, 1070, 10);
+                    break;
+                case '#links':
+                    svgAnimatedPanTo(2350, 1105, 16);
+                    break;
+                case '#':
+                    svgAnimatedPanTo(1470, 100, 0.8);
+                default:
+                    break;
+            }
+        }
+
+    </script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#home" onclick="svgNav('#home')">Home</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#about" onclick="svgNav('#about')">About Me</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#publications" onclick="svgNav('#publications')">Publications</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#contact" onclick="svgNav('#contact')">Contact</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#cv" onclick="svgNav('#cv')">View CV</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#links" onclick="svgNav('#links')">Interesting Links</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#" onclick="svgNav('#')">Reset View</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div id="drawing" class="drawing"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        [svg_template_field]
+    </div>
+  </body>
+
+</html>

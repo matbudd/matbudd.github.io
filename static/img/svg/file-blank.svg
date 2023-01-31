@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   fill="currentColor"
+   class="bi bi-file-earmark-pdf-fill"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="svg54442"
+   sodipodi:docname="file-earmark-pdf-fill.svg"
+   inkscape:version="1.2.2 (1:1.2.2+202212051550+b0a8486541)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs54446" />
+  <sodipodi:namedview
+     id="namedview54444"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="64.1875"
+     inkscape:cx="8.5296981"
+     inkscape:cy="8.0077897"
+     inkscape:window-width="3768"
+     inkscape:window-height="2089"
+     inkscape:window-x="1512"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg54442" />
+  <path
+     d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z"
+     id="path54438" />
+  <path
+     fill-rule="evenodd"
+     d="M 4,0 H 9.293 C 9.5581948,5.6637405e-5 9.8125073,0.10545063 10,0.293 L 13.707,4 C 13.894549,4.1874927 13.999943,4.4418052 14,4.707 V 14 c 0,1.104569 -0.895431,2 -2,2 H 4 C 2.8954305,16 2,15.104569 2,14 V 2 C 2,0.8954305 2.8954305,0 4,0 Z m 5.5,1.5 v 2 c 0,0.5522847 0.4477153,1 1,1 h 2 z"
+     id="path54440"
+     sodipodi:nodetypes="sccccsssssscsscc" />
+</svg>
