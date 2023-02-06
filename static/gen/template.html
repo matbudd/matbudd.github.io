@@ -102,6 +102,10 @@
         }
 
         function svgPanTo(targetX, targetY, targetZoom) {
+            if (window.innerWidth < 600) {
+                targetZoom = targetZoom * 0.5;
+            }
+            targetX = targetX - (0.5 * window.innerWidth)*(1/targetZoom);
             panZoomInstance.zoom(targetZoom);
             panZoomInstance.pan({x: -targetX*targetZoom, y: -targetY*targetZoom});
         }
@@ -110,17 +114,11 @@
 
         function svgAnimatedPanTo(targetX, targetY, targetZoom) {
 
-            targetX = targetX - (0.5 * window.innerWidth)*(1/targetZoom);
-
-            if (window.innerWidth < 600) {
-                targetZoom = targetZoom * 0.5;
-            }
-
             var animationStep = 0,
-                animationSteps = 60,
-                zoomUpSteps = 25,
-                zoomDownStart = 45,
-                zoomDownSteps = 15,
+                animationSteps = 30,
+                zoomUpSteps = 10,
+                zoomDownStart = 20,
+                zoomDownSteps = 10,
                 defaultMoveZoom = 2.0,
                 intervalID = null,
                 windowWidth = window.innerWidth;
