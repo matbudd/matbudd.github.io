@@ -102,30 +102,26 @@
         }
 
         function svgPanTo(targetX, targetY, targetZoom) {
+            panZoomInstance.zoom(targetZoom);
+            panZoomInstance.pan({x: -targetX*targetZoom, y: -targetY*targetZoom});
+        }
 
-            var windowWidth = window.innerWidth;
+
+
+        function svgAnimatedPanTo(targetX, targetY, targetZoom) {
+
+            targetX = targetX - (0.5 * window.innerWidth)*(1/targetZoom);
 
             if (window.innerWidth < 600) {
                 targetZoom = targetZoom * 0.5;
             }
 
-            panZoomInstance.zoom(targetZoom);
-            var currentZoom = panZoomInstance.getZoom();
-
-            targetX = targetX - (0.5 * windowWidth)*(1/currentZoom);
-
-            panZoomInstance.pan({x: -targetX*currentZoom, y: -targetY*currentZoom});
-        }
-
-        function svgAnimatedPanTo(targetX, targetY, targetZoom) {
-
-            var animationStepTime = 1,
-                animationSteps = 50,
-                animationStep = 0,
-                defaultMoveZoom = 2.0,
+            var animationStep = 0,
+                animationSteps = 60,
                 zoomUpSteps = 25,
-                zoomDownStart = 25,
-                zoomDownSteps = 25,
+                zoomDownStart = 45,
+                zoomDownSteps = 15,
+                defaultMoveZoom = 2.0,
                 intervalID = null,
                 windowWidth = window.innerWidth;
 
@@ -144,12 +140,11 @@
             var stepX    = (targetX - startX) / animationSteps;
             var stepY    = (targetY - startY) / animationSteps;
 
-            intervalID = setInterval(function(){
-                if (animationStep++ >= animationSteps) {
-                    // Cancel interval
-                    clearInterval(intervalID);
-                    svgPanTo(targetX, targetY, targetZoom);
-                } else if (animationStep < zoomUpSteps) {
+            const updatePanZoom = () => {
+
+                animationStep++;
+
+                if (animationStep < zoomUpSteps) {
                     // Zoom up
                     svgPanTo((startX+animationStep*stepX), (startY+animationStep*stepY), Math.exp(logStartZoom+animationStep*logStepZoomUp));
                 } else if (animationStep > zoomDownStart) {
@@ -158,7 +153,14 @@
                 } else {
                     svgPanTo((startX+animationStep*stepX), (startY+animationStep*stepY), moveZoom);
                 }
-            }, animationStepTime);
+
+                if (animationStep < animationSteps) {
+                    requestAnimationFrame(updatePanZoom)
+                } else {
+                    svgPanTo(targetX, targetY, targetZoom);
+                }
+            }
+            requestAnimationFrame(updatePanZoom)
         }
 
         function svgNav(tgt) {
@@ -177,7 +179,7 @@
                     svgAnimatedPanTo(2730, 310, 8);
                     break;
                 case '#cv':
-                    svgAnimatedPanTo(690, 1070, 10);
+                    svgAnimatedPanTo(690, 1090, 10);
                     break;
                 case '#links':
                     svgAnimatedPanTo(2350, 1105, 16);
@@ -219,6 +221,7 @@
 
     <div id="drawing" class="drawing"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
         [svg_template_field]
+
     </div>
   </body>
 
