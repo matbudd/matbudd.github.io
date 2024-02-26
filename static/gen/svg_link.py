@@ -230,7 +230,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Insert link tags into an SVG document"
     )
-    parser.add_argument("--svg-file", type=str, default="page_text.svg")
+    parser.add_argument("--svg-file", type=str, default="page.svg")
     parser.add_argument("--links-yaml-file", type=str, default="links.yaml")
     parser.add_argument("--output-svg-file", type=str, default=None)
     parser.add_argument("--template-html", type=str, default="template.html")
