@@ -23,7 +23,7 @@ description: >- # this means to ignore newlines until "baseurl:" Add your site d
   Matthew Budd
 
 domain: matbudd.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
-url: https:matthew-budd.com  # the base hostname and protocol for your site, e.g. http://example.com
+url: https:matthewbudd.com  # the base hostname and protocol for your site, e.g. http://example.com
 baseurl: ""
 
 # Build settings
