@@ -4,11 +4,8 @@
 # Links are enforced to be fill:#0000ff
 
 links:
-  - text: ["Goal-Oriented Long-Lived", "Systems (GOALS) lab"]
+  - text: ["GOALS lab"]
     link_newtab: "https://ori.ox.ac.uk/labs/goals/"
-
-  - text: "real-world deployment"
-    link_newtab: "https://www.oxfordsparks.ox.ac.uk/podcasts/how-do-you-create-autonomous-robots-that-can-investigate-under-the-sea/"
 
   - text: "view my CV"
     link_nav: "#cv"
